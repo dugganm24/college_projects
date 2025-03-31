@@ -8,8 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bignerdranch.android.geoquiz.databinding.ActivityCheatBinding
 
 const val EXTRA_ANSWER_SHOWN = "com.bignerdranch.android.geoquiz.answer_shown"
-private const val EXTRA_ANSWER_IS_TRUE =
-    "com.bignerdranch.android.geoquiz.answer_is_true"
+private const val EXTRA_ANSWER_IS_TRUE = "com.bignerdranch.android.geoquiz.answer_is_true"
 
 class CheatActivity : AppCompatActivity() {
 
@@ -57,6 +56,7 @@ class CheatActivity : AppCompatActivity() {
         binding.answerTextView.setText(answerText)
     }
 
+    // Send back to MainActivity that the user has seen the answer
     private fun setAnswerShownResult(isAnswerShown: Boolean) {
         val data = Intent().apply {
             putExtra(EXTRA_ANSWER_SHOWN, isAnswerShown)
@@ -65,6 +65,7 @@ class CheatActivity : AppCompatActivity() {
     }
 
     companion object {
+        // Factory function to create an Intent with necessary extras
         fun newIntent(packageContext: Context, answerIsTrue: Boolean): Intent {
             return Intent(packageContext, CheatActivity::class.java).apply {
                 putExtra(EXTRA_ANSWER_IS_TRUE, answerIsTrue)
