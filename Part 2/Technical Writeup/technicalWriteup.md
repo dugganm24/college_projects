@@ -16,7 +16,7 @@ AddEditTaskViewModel.kt represents the ViewModel layer, which is the middle comp
 
 This component interacts with the Model, or data, layer through AddEditTaskViewModel as well. This file interacts with the TaskRepository, which has functions for creating, updating, and getting tasks from the database. This repository works with the Room database through the DAO to perform these operations.
 
-__Key Feature 2 Viewing Task Details__
+__Key Feature 2: Viewing Task Details__
 
 The second key feature to highlight is the ability to view task details in the tasks lists. To overview the high level functionality of this feature, a user can  select a task from the tasks list which brings them to the task details screen, which displays the title, description, and completion status of the task. It also offers options to edit or delete the task. This functionality is implemented in two main files, TaskDetailScreen.kt and TaskDetailViewModel.kt.
 
