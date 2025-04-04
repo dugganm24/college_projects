@@ -15,4 +15,5 @@ __File Structure__
 * Learning Note: Contains learning note to summarize what we learned throughout this activity 
 * Screen Recording + Voiceover: Contains screen recording with voiceover of key features
 * Source Code: Contains source code of Sunflower app along with comments to document how key files are implemented
+    * To access main code, access this directory: Part Bonus 2/Project 1/Source Code/sunflower/app/src/main/java/com/google/samples/apps/sunflower
 * Technical Writeup: Contains technical writeup with information on project setup, app overview, and two key features
