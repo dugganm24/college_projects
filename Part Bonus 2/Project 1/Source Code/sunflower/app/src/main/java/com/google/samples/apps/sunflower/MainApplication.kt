@@ -1,0 +1,33 @@
+/*
+ * Copyright 2020 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.google.samples.apps.sunflower
+
+import android.app.Application
+import androidx.work.Configuration
+import dagger.hilt.android.HiltAndroidApp
+
+// MainApplication is the entry point for Sunflower
+// Annotated with @HiltAndroidApp, triggers Hilt code generation
+// Allows for dependency injection throughout the app
+@HiltAndroidApp
+class MainApplication : Application(), Configuration.Provider {
+  // Override workManagerConfiguration to provide a custom Configuration
+  override val workManagerConfiguration: Configuration
+    get() = Configuration.Builder()
+      .setMinimumLoggingLevel(if (BuildConfig.DEBUG) android.util.Log.DEBUG else android.util.Log.ERROR)
+      .build()
+}
