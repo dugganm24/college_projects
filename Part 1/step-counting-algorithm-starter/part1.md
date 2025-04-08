@@ -34,7 +34,25 @@ def visualize_xyz_data(data):
 
 
 ### 3. Questions
+__Question 1__ 
 
+The value ranges for the D1 trace were as follows:
+
+    - X-axis: Approximately 6 - 12 m/s^2
+    - Y-axis: Approximately 1 - 6 m/s^2
+    - Z-axis: Approximately -2 - 2 m/s^2
+
+The value ranges for the D3 trace were as follows:
+
+    - X-axis: Approximately -1 - 2 m/s^2
+    - Y-axis: Approximately -3 - 3 m/s^2
+    - Z-axis: Approximately -4 - 4 m/s^2
+
+These values were roughly obtained by intepreting the plots listed above. 
+
+__Question 2__ 
+
+The accelerometer data looks different for two main reasons. First, the data in D1 was collected with the phone in the left hand and the data in D3 was collected with the phone in the right hand. Depending on which hand was dominant for the person holding the phone, the amount of swaying may vary from hand to hand. The data in D1 was also collected with a regular accelerometer (which accounts for all accleration, including gravity), while the data in D3 was recorded with a linear accelerometer (which does not account for gravity). This discrepancy in sensor type can also account for some differences in data readings. 
 
 ## Task 2: Visualize the magnitude of acceleration
 
@@ -50,6 +68,9 @@ def visualize_xyz_data(data):
 
 ### 2. Questions
 
+__Question 1__
+
+When observing the magnitude plots compared to the previous raw acceleration data plots, it is easy to see that the magnitude plot combines all three aces into one signal, which makes it easier to spot any peaks that correspond to step data. It also makes the signal smoother and better suited for step detection overall. 
 
 ## Task 3: Denoising the magnitude data
 
