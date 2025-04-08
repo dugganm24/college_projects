@@ -133,3 +133,16 @@ Total Step Count: 20
          4          20          21        True
          5          20          20        True
 ```
+
+These values were obtainable by editing the height_threshold and distance in detect_peaks. We decreased the height_threshold by multiplying it by 0.85 to allow for more peaks to be included, and decreased the distance by dividing sampling_rate by 1.8 rather than 2 to allow for more peaks to be included that are close together.
+
+```python
+def detect_peaks(data, sampling_rate):
+        """
+        Detect peaks in the smoothed magnitude data to count steps.
+        """
+        height_threshold = 0.85 * (data.mean() + data.std()) # Adjusted height threshold for improved accuracy
+        print ("height threshold", height_threshold)
+        peaks, _ = find_peaks(data, height=height_threshold, distance=sampling_rate/1.8, prominence=0.25) # Adjusted distance for improved accuracy
+        return peaks
+```
