@@ -14,7 +14,7 @@ Framework to save accelerometer data to the Android file system
 ## Implemented Feature: App now records and outputs sensor data for the accelerometer and linear accelerometer
 
 **Updates Made:**  
-Code is located at: `Part 1/GeoQuiz-Starter/GeoQuiz/sourceCode/app/src/main/java/com/bignerdranch/android/geoquiz`
+Code is located at: `Part 2/sourceCode/SaveAccelerometerData-starter/app/src/main/java/edu/wpi/cs/cs4518/saveaccelerometerdata/MainActivity.kt`
 
 We Modified the app’s MainActivity so that both the regular accelerometer (`Sensor.TYPE_ACCELEROMETER`) 
 and the linear accelerometer (`Sensor.TYPE_LINEAR_ACCELERATION`) 
