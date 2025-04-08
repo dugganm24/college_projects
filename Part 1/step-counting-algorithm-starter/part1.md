@@ -55,6 +55,7 @@ def visualize_xyz_data(data):
 
 ### 1. Bandpass filter code
 
+```python
 def band_pass_butterworth_filter(data, low_cutoff, high_cutoff, sampling_rate, order=4):
     """
     Apply a band-pass Butterworth filter to remove frequencies below and above specified cutoffs.
@@ -73,6 +74,7 @@ def apply_band_pass_filter(data, sampling_rate, low_cutoff=0.5, high_cutoff=5.0)
     data['magnitude_band_filtered'] = band_pass_butterworth_filter(data['magnitude'], low_cutoff, high_cutoff, sampling_rate)
     visualize_data(data['timestamp'], data['magnitude_band_filtered'], 'Band Filtered Magnitude', 'Band-Pass Filtered Magnitude Over Time')
     return data
+```
 
 ### 2. Plots 
 
@@ -85,6 +87,7 @@ def apply_band_pass_filter(data, sampling_rate, low_cutoff=0.5, high_cutoff=5.0)
 
 ### 3. Exponential moving average code
 
+```python
 def apply_exponential_smoothing(data, alpha=0.5):
     """
     Apply exponential smoothing to reduce noise.
@@ -92,6 +95,7 @@ def apply_exponential_smoothing(data, alpha=0.5):
     data['magnitude_smoothed'] = data['magnitude_band_filtered'].ewm(alpha=alpha).mean()
     visualize_data(data['timestamp'], data['magnitude_smoothed'], 'Exponentially Smoothed Magnitude', 'Exponentially Smoothed Magnitude Over Time')
     return data
+```
 
 ### 4. Plots 
 
