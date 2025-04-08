@@ -110,9 +110,9 @@ def detect_peaks(data, sampling_rate):
         """
         Detect peaks in the smoothed magnitude data to count steps.
         """
-        height_threshold = data.mean() + data.std()
+        height_threshold = 0.85 * (data.mean() + data.std()) # Adjusted height threshold for improved accuracy
         print ("height threshold", height_threshold)
-        peaks, _ = find_peaks(data, height=height_threshold, distance=sampling_rate/2, prominence=0.25)
+        peaks, _ = find_peaks(data, height=height_threshold, distance=sampling_rate/1.8, prominence=0.25) # Adjusted distance for improved accuracy
         return peaks
     
 # Helper function to visualize step detection
