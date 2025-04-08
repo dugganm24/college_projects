@@ -7,7 +7,6 @@ The code for this portion of the lab is implemented in lab2part1.py, which is lo
 ### 1. Plotting code
 
 def visualize_xyz_data(data):
-
     """
 
     Visualize the x, y, z acceleration data.
@@ -126,7 +125,7 @@ def apply_exponential_smoothing(data, alpha=0.5):
     data['magnitude_smoothed'] = data['magnitude_band_filtered'].ewm(alpha=alpha).mean()
 
     visualize_data(data['timestamp'], data['magnitude_smoothed'], 'Exponentially Smoothed Magnitude', 'Exponentially Smoothed Magnitude Over Time')
-    
+
     return data
 
 ### 4. Plots 
