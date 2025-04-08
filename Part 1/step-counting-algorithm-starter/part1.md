@@ -26,6 +26,8 @@ def visualize_xyz_data(data):
 ![Alt text](writeup_images/D1_task1.png)
 
 `data/D3_righthand_normal_20steps_linearaccelerometer.csv`
+![Alt text](writeup_images/D3_task1.png)
+
 
 ### 3. Questions
 
@@ -34,8 +36,12 @@ def visualize_xyz_data(data):
 
 ### 1. Plots 
 `data/D1_lefthand_normal_20steps.csv`
+![Alt text](writeup_images/D1_task2.png)
+
 
 `data/D3_righthand_normal_20steps_linearaccelerometer.csv`
+![Alt text](writeup_images/D3_task2.png)
+
 
 ### 2. Questions
 
@@ -47,16 +53,21 @@ def visualize_xyz_data(data):
 
 ### 2. Plots 
 `data/D1_lefthand_normal_20steps.csv`
+![Alt text](writeup_images/D1_task3.png)
 
 `data/D3_righthand_normal_20steps_linearaccelerometer.csv`
+![Alt text](writeup_images/D3_task3.png)
+
 
 ### 3. Exponential moving average code
 
 
 ### 4. Plots 
 `data/D1_lefthand_normal_20steps.csv`
+![Alt text](writeup_images/D1_task3.2.png)
 
 `data/D3_righthand_normal_20steps_linearaccelerometer.csv`
+![Alt text](writeup_images/D3_task3.2.png)
 
 ## Task 4: Step counting on filtered magnitude data
 
@@ -65,7 +76,10 @@ def visualize_xyz_data(data):
 
 ### 2. Plots 
 `data/D1_lefthand_normal_20steps.csv`
+![Alt text](writeup_images/D1_task4.png)
+
 
 `data/D3_righthand_normal_20steps_linearaccelerometer.csv`
+![Alt text](writeup_images/D3_task4.png)
 
 ### 3. Step count tables
