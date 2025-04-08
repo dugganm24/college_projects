@@ -124,7 +124,7 @@ __D3 Steps Detected:__ 20
 
 ### 3. Step count tables
 
-```
+```bash
 Total Step Count: 20
         ID      Actual    Detected     Passed?
          1          20          21        True
