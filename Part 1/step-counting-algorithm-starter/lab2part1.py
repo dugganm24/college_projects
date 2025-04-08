@@ -160,11 +160,6 @@ def step_detection_algorithm(file_path):
     
     return step_count
 
-# Run algorithm with D1, D3, D5 for submission
-step_detection_algorithm("data/D1_lefthand_normal_20steps.csv")
-step_detection_algorithm("data/D3_righthand_normal_20steps_linearaccelerometer.csv")
-step_detection_algorithm("data/D5_lefthand_slow_circle_hop_20steps_linearaccelerometer.csv")
-
 import glob, re
 
 directory_path = "data"
