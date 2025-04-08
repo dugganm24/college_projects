@@ -37,8 +37,8 @@ import java.util.Locale
 
 class MainActivity : AppCompatActivity(), SensorEventListener {
 	private var sensorManager: SensorManager? = null
-	private var accelerometer: Sensor? = null
-	private var fileWriter: FileWriter? = null
+//	private var accelerometer: Sensor? = null
+//	private var fileWriter: FileWriter? = null
 	private lateinit var statusTextView: TextView
 	private lateinit var startButton: Button
 	private lateinit var stopButton: Button
@@ -46,6 +46,10 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
 	private val desiredFrequencyHz = 50
 	private val samplingPeriodUs = 1_000_000 / desiredFrequencyHz
+
+	//File writer for both linear accelerometer and normal accelerometer data
+	private var linearFileWriter: FileWriter? = null
+	private var normalFileWriter: FileWriter? = null
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -68,17 +72,34 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
 	private fun initialize() {
 		sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
-		accelerometer = sensorManager?.getDefaultSensor(SENSOR_TYPE)
 
-		accelerometer?.let {
+		//Get both linear and normal accelerometers
+		val linearSensor = sensorManager?.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION)
+		val normalSensor = sensorManager?.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+
+		//Register listeners for both sensors
+		linearSensor?.let {
 			// note that the sampling rate is just a hint; so we might not get 50Hz exact.
 			sensorManager?.registerListener(this, it, samplingPeriodUs)
 		}
 
+		normalSensor?.let {
+			sensorManager?.registerListener(this, it, samplingPeriodUs)
+		}
+
 		try {
-			val file = createCSVFile()
-			fileWriter = FileWriter(file)
-			fileWriter?.append("Timestamp,X,Y,Z\n")
+			//Create CSV files for both linear and normal accelerometer data
+			val linearFile = createCSVFile("LinearAccelerometer")
+			val normalFile = createCSVFile("Accelerometer")
+
+			linearFileWriter = FileWriter(linearFile)
+			normalFileWriter = FileWriter(normalFile)
+
+			//Write headers for both files
+			linearFileWriter?.append("Timestamp, X, Y, Z\n")
+			normalFileWriter?.append("Timestamp, X, Y, Z\n")
+
+
 			isRecording = true
 			statusTextView.text = "Recording..."
 			startButton.isEnabled = false
@@ -93,7 +114,9 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 		if (isRecording) {
 			sensorManager?.unregisterListener(this)
 			try {
-				fileWriter?.close()
+				//stop file writers to save collected data
+				linearFileWriter?.close()
+				normalFileWriter?.close()
 				Toast.makeText(this, "Recording saved", Toast.LENGTH_SHORT).show()
 			} catch (e: IOException) {
 				e.printStackTrace()
@@ -107,9 +130,9 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 	}
 
 	@Throws(IOException::class)
-	private fun createCSVFile(): File {
+	private fun createCSVFile(prefix: String): File {
 		val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
-		val fileName = "AccelerometerData_$timestamp.csv"
+		val fileName = "${prefix}Data_$timestamp.csv"
 		val storageDir =
 			Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
 		if (!storageDir.exists()) {
@@ -123,25 +146,20 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 	}
 
 	override fun onSensorChanged(event: SensorEvent) {
-		if (event.sensor.type == SENSOR_TYPE && isRecording) {
-			val currentTimestamp = System.currentTimeMillis()
+		if (isRecording) {
+			val timestamp = System.currentTimeMillis()
 
 			val x = event.values[0]
 			val y = event.values[1]
 			val z = event.values[2]
 
+			val line = String.format(Locale.getDefault(), "%d,%.3f,%.3f,%.3f\n", timestamp, x, y, z)
 
 			try {
-				fileWriter?.append(
-					String.format(
-						Locale.getDefault(),
-						"%d,%.3f,%.3f,%.3f\n",
-						currentTimestamp,
-						x,
-						y,
-						z
-					)
-				)
+				when (event.sensor.type) {
+					Sensor.TYPE_LINEAR_ACCELERATION -> linearFileWriter?.append(line)
+					Sensor.TYPE_ACCELEROMETER -> normalFileWriter?.append(line)
+				}
 			} catch (e: IOException) {
 				e.printStackTrace()
 			}
@@ -158,7 +176,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 		stopRecording()
 	}
 
-	companion object {
-		const val SENSOR_TYPE = Sensor.TYPE_LINEAR_ACCELERATION
-	}
+	//Not used anymore
+//	companion object {
+//		const val SENSOR_TYPE = Sensor.TYPE_LINEAR_ACCELERATION
+//	}
 }
