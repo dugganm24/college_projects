@@ -53,7 +53,6 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 			}
 		}
 
-
 		// Stop tracking sensor data
 		binding.buttonStop.setOnClickListener {
 			if (isSensorActive){
@@ -62,6 +61,12 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 				isSensorActive = false
 				Log.d(TAG, "Sensor unregistered")
 			}
+		}
+
+		// Reset step count
+		binding.buttonReset.setOnClickListener {
+			Log.d(TAG, "Reset button clicked")
+			viewModel.resetStepCount()
 		}
 	}
 

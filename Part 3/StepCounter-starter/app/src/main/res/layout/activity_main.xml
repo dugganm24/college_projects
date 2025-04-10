@@ -27,4 +27,12 @@
         android:layout_height="wrap_content"
         android:text="Stop"
         android:layout_marginTop="8dp"/>
+
+    <Button
+        android:id="@+id/buttonReset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Reset" />
+
 </LinearLayout>
