@@ -59,14 +59,14 @@ class CounterViewModel : ViewModel() {
 	//          can also go here (i.e., send request and then parse response)
 	//  3. Once you get the detected step counts, use it to update the current step
 	private fun processSensorData(data: List<FloatArray>, timestamps: List<Long>) {
-		// Using coroutine for network operations as required
+		// Using coroutine for network operations
 		CoroutineScope(Dispatchers.IO).launch {
 			try {
-				// Create properly formatted JSON for the server
+				// Create properly formatted JSON for server.py
 				val json = buildJson(data, timestamps)
 				Log.d(TAG, "Sending data to server: ${json.take(100)}...")
 
-				// Create HTTP client with reasonable timeouts
+				// Create HTTP client
 				val client = OkHttpClient.Builder()
 					.connectTimeout(5, TimeUnit.SECONDS)
 					.readTimeout(10, TimeUnit.SECONDS)
@@ -121,30 +121,6 @@ class CounterViewModel : ViewModel() {
 		}
 
 		return jsonArray.toString()
-	}
-
-	// Check if server is reachable
-	fun checkServerConnection() {
-		CoroutineScope(Dispatchers.IO).launch {
-			try {
-				val client = OkHttpClient.Builder()
-					.connectTimeout(2, TimeUnit.SECONDS)
-					.build()
-
-				val request = Request.Builder()
-					.url("http://10.0.2.2:5050/data")
-					.head() // Just check connection without data
-					.build()
-
-				val response = client.newCall(request).execute()
-				isConnected = response.isSuccessful
-
-				Log.d(TAG, "Server connection check: ${if (isConnected) "Connected" else "Failed"}")
-			} catch (e: Exception) {
-				Log.e(TAG, "Server connection check failed: ${e.message}")
-				isConnected = false
-			}
-		}
 	}
 
 	// Reset step counter
