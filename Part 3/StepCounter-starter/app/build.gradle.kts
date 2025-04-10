@@ -55,6 +55,7 @@ dependencies {
 	testImplementation(libs.junit)
 	androidTestImplementation(libs.androidx.junit)
 	androidTestImplementation(libs.androidx.espresso.core)
+	implementation("com.squareup.okhttp3:okhttp:4.12.0")
 
 	implementation("com.github.psambit9791:jdsp:3.1.0"){
 		exclude(group = "org.apache.maven.surefire", module = "common-java5")

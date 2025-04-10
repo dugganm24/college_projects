@@ -4,7 +4,7 @@ import pandas as pd
 import json
 import numpy as np
 from scipy.signal import butter, filtfilt, find_peaks
-import random 
+import random
 
 app = Flask(__name__)
 
@@ -37,7 +37,7 @@ def process_data():
     average_sampling_interval = time_differences.mean()  # Average time interval in milliseconds
     sampling_rate = 1000 / average_sampling_interval if average_sampling_interval > 0 else float('inf')  # Convert interval to Hz
 
-    number_of_steps = step_detection(newData, sampling_rate)    
+    number_of_steps = step_detection(newData, sampling_rate)
     logger.info(f"Sampling rate: {sampling_rate}, number of steps: {number_of_steps}")
 
     # Return processed results
@@ -58,31 +58,47 @@ def json_to_dataframe(json_data):
         if isinstance(json_data, str):
             import json
             json_data = json.loads(json_data)
-        
+
         # Ensure the data is a list of dictionaries
         if not isinstance(json_data, list):
             raise ValueError("Input data should be a list of dictionaries.")
-        
+
         # Convert the JSON data to a DataFrame
         df = pd.DataFrame(json_data)
-        
+
         # Ensure the DataFrame has the required columns
         required_columns = ['timestamp', 'x', 'y', 'z']
         if not all(column in df.columns for column in required_columns):
             raise ValueError(f"Input data is missing required columns: {required_columns}")
-        
+
         # Select only the required columns
         df = df[required_columns]
-        
+
         return df
     except (ValueError, KeyError, TypeError) as e:
         raise ValueError(f"Error processing JSON data: {e}")
-    
-    
-# TODO: this is essentially the step detection algorithm you implemented in Part 1 
+
+
+# TODO: this is essentially the step detection algorithm you implemented in Part 1
 def step_detection(data, sampling_rate):
-    step_count = random.randint(1, 5)
-    
+    data['magnitude'] = np.sqrt(data['x']**2 + data['y']**2 + data['z']**2)
+
+    def band_pass_butterworth_filter(values, low_cutoff=0.5, high_cutoff=5.0, order=4):
+        nyquist = 0.5 * sampling_rate
+        low = low_cutoff / nyquist
+        high = high_cutoff / nyquist
+        b, a = butter(order, [low, high], btype='band', analog=False)
+        return filtfilt(b, a, values)
+
+    data['magnitude_band_filtered'] = band_pass_butterworth_filter(data['magnitude'])
+
+    data['magnitude_smoothed'] = data['magnitude_band_filtered'].ewm(alpha=0.5).mean()
+
+    smoothed = data['magnitude_smoothed']
+    height_threshold = 0.85 * (smoothed.mean() + smoothed.std())
+    peaks, _ = find_peaks(smoothed, height=height_threshold, distance=sampling_rate/1.8, prominence=0.25)
+
+    step_count = len(peaks)
     return step_count
 
 
