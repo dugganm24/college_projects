@@ -12,7 +12,7 @@ This involves the use of data storage, visualization, and lifecycle-aware UI dat
 ---
 
 ## Saving Steps in a Database
-Code is located at: `Part 2/sourceCode/SaveAccelerometerData-starter/app/src/main/java/edu/wpi/cs/cs4518/saveaccelerometerdata/MainActivity.kt`
+Code is located at: `Part Bonus/sourceCode/StepCounter-starter/app/src/main/java/edu/wpi/cs/cs4518/stepcounter_starter`
 
 Added Files:
  - `StepEntry.kt` (Room Entity)
@@ -31,7 +31,7 @@ Added Files:
 - Added database initialization in `onCreate` of `MainActivity.kt`
 
 ## Display fragment for steps chart
-Code is located at: `Part 2/sourceCode/SaveAccelerometerData-starter/app/src/main/java/edu/wpi/cs/cs4518/saveaccelerometerdata/MainActivity.kt`
+Code is located at: `Part Bonus/sourceCode/StepCounter-starter/app/src/main/java/edu/wpi/cs/cs4518/stepcounter_starter`
 
 Added Files:
 - `StepChartActivity.kt`
