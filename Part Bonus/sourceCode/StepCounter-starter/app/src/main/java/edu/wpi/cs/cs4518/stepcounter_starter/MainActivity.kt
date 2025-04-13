@@ -4,6 +4,7 @@
 package edu.wpi.cs.cs4518.stepcounter_starter
 
 
+import android.content.Intent
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -30,6 +31,9 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 		super.onCreate(savedInstanceState)
 		binding = ActivityMainBinding.inflate(layoutInflater)
 		setContentView(binding.root)
+
+		// Initialize database
+		viewModel.initDatabase(applicationContext)
 
 		sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
 		linearAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION)
@@ -68,6 +72,13 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 			Log.d(TAG, "Reset button clicked")
 			viewModel.resetStepCount()
 		}
+
+		// View step chart button
+		binding.buttonViewChart.setOnClickListener {
+			val intent = Intent(this, StepChartActivity::class.java)
+			startActivity(intent)
+		}
+
 	}
 
 	override fun onSensorChanged(event: SensorEvent?) {

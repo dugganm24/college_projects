@@ -103,6 +103,29 @@ class CounterViewModel : ViewModel() {
 
 						// Update UI on the main thread
 						withContext(Dispatchers.Main) {
+							//update liveData step count
+							val updatedCount = (_stepCount.value ?: 0) + newSteps
+							_stepCount.value = updatedCount
+
+							//save step data to database
+							try {
+								withContext(Dispatchers.IO) {
+									//get current date
+									val currentTime = System.currentTimeMillis()
+									val hour = java.util.Calendar.getInstance().get(java.util.Calendar.HOUR_OF_DAY)
+
+									database.stepDao().insert(StepEntry(
+										timestamp = currentTime,
+										steps = newSteps,
+										hour = hour
+									))
+									Log.d(TAG, "Step data saved to database")
+								}
+							} catch (e: Exception) {
+								Log.e(TAG, "Database error: ${e.message}", e)
+							}
+
+
 							_stepCount.value = (_stepCount.value ?: 0) + newSteps
 						}
 					} else {
