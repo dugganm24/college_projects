@@ -8,5 +8,6 @@ import androidx.room.PrimaryKey
 data class StepEntry(
     @PrimaryKey(autoGenerate = true) val id: Int = 0, // Primary key field
     val timestamp: Long, //time of step detection in milliseconds
+    val hour: Int,
     val steps: Int //number of steps detected
 )

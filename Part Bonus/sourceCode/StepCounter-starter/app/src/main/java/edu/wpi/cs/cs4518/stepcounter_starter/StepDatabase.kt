@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 //Defines database schema and version
-@Database(entities = [StepEntry::class], version = 1)
+@Database(entities = [StepEntry::class], version = 3)
 abstract class StepDatabase : RoomDatabase() {
 
     // abstract method that returns the DAO
@@ -24,7 +24,9 @@ abstract class StepDatabase : RoomDatabase() {
                     context.applicationContext,
                     StepDatabase::class.java,
                     "step_db" // Name of the database file
-                ).build()
+                )
+                    .fallbackToDestructiveMigration()
+                    .build()
                 INSTANCE = instance
                 instance
             }
