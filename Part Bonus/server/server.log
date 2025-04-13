@@ -1,0 +1,57 @@
+2025-04-11 13:38:50,931 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5050
+ * Running on http://130.215.12.19:5050
+2025-04-11 13:38:50,931 - INFO - [33mPress CTRL+C to quit[0m
+2025-04-11 13:38:50,933 - INFO -  * Restarting with stat
+2025-04-11 13:38:51,858 - WARNING -  * Debugger is active!
+2025-04-11 13:38:51,863 - INFO -  * Debugger PIN: 505-779-717
+2025-04-11 13:39:31,381 - INFO - 127.0.0.1 - - [11/Apr/2025 13:39:31] "[35m[1mPOST /data HTTP/1.1[0m" 500 -
+2025-04-11 13:39:32,325 - INFO - Sampling rate: 49.94903160040775, number of steps: 0
+2025-04-11 13:39:32,326 - INFO - 127.0.0.1 - - [11/Apr/2025 13:39:32] "POST /data HTTP/1.1" 200 -
+2025-04-11 13:39:33,325 - INFO - Sampling rate: 50.0, number of steps: 0
+2025-04-11 13:39:33,325 - INFO - 127.0.0.1 - - [11/Apr/2025 13:39:33] "POST /data HTTP/1.1" 200 -
+2025-04-11 13:39:34,318 - INFO - Sampling rate: 50.05107252298263, number of steps: 0
+2025-04-11 13:39:34,318 - INFO - 127.0.0.1 - - [11/Apr/2025 13:39:34] "POST /data HTTP/1.1" 200 -
+2025-04-11 13:39:35,333 - INFO - Sampling rate: 49.94903160040775, number of steps: 1
+2025-04-11 13:39:35,334 - INFO - 127.0.0.1 - - [11/Apr/2025 13:39:35] "POST /data HTTP/1.1" 200 -
+2025-04-11 13:39:36,326 - INFO - Sampling rate: 50.0, number of steps: 1
+2025-04-11 13:39:36,327 - INFO - 127.0.0.1 - - [11/Apr/2025 13:39:36] "POST /data HTTP/1.1" 200 -
+2025-04-11 13:39:37,316 - INFO - Sampling rate: 49.94903160040775, number of steps: 1
+2025-04-11 13:39:37,317 - INFO - 127.0.0.1 - - [11/Apr/2025 13:39:37] "POST /data HTTP/1.1" 200 -
+2025-04-11 13:39:38,317 - INFO - Sampling rate: 50.05107252298263, number of steps: 1
+2025-04-11 13:39:38,317 - INFO - 127.0.0.1 - - [11/Apr/2025 13:39:38] "POST /data HTTP/1.1" 200 -
+2025-04-11 13:39:39,321 - INFO - Sampling rate: 49.94903160040775, number of steps: 1
+2025-04-11 13:39:39,323 - INFO - 127.0.0.1 - - [11/Apr/2025 13:39:39] "POST /data HTTP/1.1" 200 -
+2025-04-11 13:39:40,314 - INFO - Sampling rate: 50.05107252298263, number of steps: 1
+2025-04-11 13:39:40,314 - INFO - 127.0.0.1 - - [11/Apr/2025 13:39:40] "POST /data HTTP/1.1" 200 -
+2025-04-11 13:39:41,316 - INFO - Sampling rate: 50.0, number of steps: 1
+2025-04-11 13:39:41,316 - INFO - 127.0.0.1 - - [11/Apr/2025 13:39:41] "POST /data HTTP/1.1" 200 -
+2025-04-11 13:39:42,316 - INFO - Sampling rate: 50.05107252298263, number of steps: 1
+2025-04-11 13:39:42,316 - INFO - 127.0.0.1 - - [11/Apr/2025 13:39:42] "POST /data HTTP/1.1" 200 -
+2025-04-11 13:39:43,319 - INFO - Sampling rate: 49.94903160040775, number of steps: 1
+2025-04-11 13:39:43,320 - INFO - 127.0.0.1 - - [11/Apr/2025 13:39:43] "POST /data HTTP/1.1" 200 -
+2025-04-11 13:39:44,327 - INFO - Sampling rate: 49.94903160040775, number of steps: 0
+2025-04-11 13:39:44,328 - INFO - 127.0.0.1 - - [11/Apr/2025 13:39:44] "POST /data HTTP/1.1" 200 -
+2025-04-11 13:39:45,315 - INFO - Sampling rate: 49.94903160040775, number of steps: 1
+2025-04-11 13:39:45,315 - INFO - 127.0.0.1 - - [11/Apr/2025 13:39:45] "POST /data HTTP/1.1" 200 -
+2025-04-11 13:39:46,315 - INFO - Sampling rate: 49.94903160040775, number of steps: 0
+2025-04-11 13:39:46,316 - INFO - 127.0.0.1 - - [11/Apr/2025 13:39:46] "POST /data HTTP/1.1" 200 -
+2025-04-11 13:39:47,315 - INFO - Sampling rate: 50.0, number of steps: 1
+2025-04-11 13:39:47,315 - INFO - 127.0.0.1 - - [11/Apr/2025 13:39:47] "POST /data HTTP/1.1" 200 -
+2025-04-11 13:39:48,327 - INFO - Sampling rate: 49.89816700610998, number of steps: 1
+2025-04-11 13:39:48,327 - INFO - 127.0.0.1 - - [11/Apr/2025 13:39:48] "POST /data HTTP/1.1" 200 -
+2025-04-11 13:39:49,325 - INFO - Sampling rate: 50.0, number of steps: 1
+2025-04-11 13:39:49,326 - INFO - 127.0.0.1 - - [11/Apr/2025 13:39:49] "POST /data HTTP/1.1" 200 -
+2025-04-11 13:39:50,315 - INFO - Sampling rate: 50.0, number of steps: 0
+2025-04-11 13:39:50,315 - INFO - 127.0.0.1 - - [11/Apr/2025 13:39:50] "POST /data HTTP/1.1" 200 -
+2025-04-11 13:39:51,321 - INFO - Sampling rate: 49.94903160040775, number of steps: 0
+2025-04-11 13:39:51,321 - INFO - 127.0.0.1 - - [11/Apr/2025 13:39:51] "POST /data HTTP/1.1" 200 -
+2025-04-11 13:39:52,314 - INFO - Sampling rate: 49.94903160040775, number of steps: 1
+2025-04-11 13:39:52,315 - INFO - 127.0.0.1 - - [11/Apr/2025 13:39:52] "POST /data HTTP/1.1" 200 -
+2025-04-11 13:39:53,313 - INFO - Sampling rate: 50.0, number of steps: 1
+2025-04-11 13:39:53,314 - INFO - 127.0.0.1 - - [11/Apr/2025 13:39:53] "POST /data HTTP/1.1" 200 -
+2025-04-11 13:39:54,314 - INFO - Sampling rate: 50.0, number of steps: 1
+2025-04-11 13:39:54,315 - INFO - 127.0.0.1 - - [11/Apr/2025 13:39:54] "POST /data HTTP/1.1" 200 -
+2025-04-11 13:39:55,316 - INFO - Sampling rate: 49.94903160040775, number of steps: 0
+2025-04-11 13:39:55,317 - INFO - 127.0.0.1 - - [11/Apr/2025 13:39:55] "POST /data HTTP/1.1" 200 -
