@@ -35,19 +35,26 @@ Code is located at: `Part 2/sourceCode/SaveAccelerometerData-starter/app/src/mai
 
 Added Files:
 - `StepChartActivity.kt`
+
   - Hosts the chart fragment
+    
 - `StepChartFragment.kt`
+  
   - Loads hourly step data from database, for testing purposes dummy data is used not actual sensor data
   - Uses MPAndroidChart to display a bar chart of steps taken each hour
   - Supports swipe gestures using GestureDetector for navigating between days
   - Updates the chart and header with the corresponding date and total steps
   - Handles screen rotation and preserves selected date and chart state
   - Supports landscape mode with properly displayed UI
+    
 - `fragment_step_chart.xml`
+  
   - UI layout for displaying the date and total steps at the top
   - Contains a BarChart that dynamically updates based on selected date
   - Uses LinearLayout with padding and spacing
+    
 - `activity_step_chart.xml`
+  
   - Hosts the `StepChartFragment` inside the activity
 
 
