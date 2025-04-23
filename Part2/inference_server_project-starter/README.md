@@ -19,10 +19,14 @@ curl -X POST -F "file=@test-images/dog.jpg" http://127.0.0.1:5050/predict
 ```
 
 If the server setup is successful, you should see the output like this:
-
+Now updated to return top 5 predictions:
 ```bash 
 # output
-{"predicted_label":"Doberman","score":0.9957420229911804}
+{"predictions":[{"prediction_label":"Doberman","score":0.8287530541419983},
+{"prediction_label":"German short-haired pointer","score":0.002210764680057764},
+{"prediction_label":"Rhodesian ridgeback","score":0.0014806906692683697},{
+  "prediction_label":"gas pump","score":0.001086001400835812},
+  {"prediction_label":"kelpie","score":0.0009684535325504839}]}
 ```
 
 

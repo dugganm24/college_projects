@@ -42,9 +42,15 @@ while True:
         if response.status_code == 200:
             # print("Prediction:", response.json().get("predicted_label", "Unknown"))
             json_response = response.json()
-            predicted_label = json_response.get("predicted_label", "Unknown")
+            top5 = json_response.get("top5", [])      # Get top 5 predictions from server response
             score = json_response.get("score", 0.0)  # Default to 0.0 if no score is returned
-            print(f"Prediction: {predicted_label} (Score: {score:.2f})")		
+
+            # Print all top 5 predictions with label and score
+            print("Predictions:")
+        for i, pred in enumerate(top5):
+            label = pred.get("prediction_label", "Unknown")
+            score = pred.get("score", 0.0)
+            print(f"{i+1}. {label} (Score: {score:.2f})")
         else:
             print("Error:", response.json().get("error", "Unknown error"))
     except requests.exceptions.RequestException as e:
