@@ -10,7 +10,7 @@ This project demonstrates a working implementation of an on-device LLM using the
 
 ## Technical Depth
 Deploying an LLM on a mobile device includes several difficulties. This project explores:
-- Quantized LLMs optimized for mobile use
-- Model integration using MediaPipe's LLM Inference API 
+- LLMs optimized for mobile use
+- Model integration using MediaPipe's LLM Inference APIs
 - Inference on CPU and GPU backends
 - Building a lightweight responsive UI for interaction
