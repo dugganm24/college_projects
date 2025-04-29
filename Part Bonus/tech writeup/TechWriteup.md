@@ -1,1 +1,18 @@
 # Bonus Part - Technical Writeup
+
+## Project Setup
+Setting up this project for further development was a straightforward process. The first step is to download Android Studio Installer for the correct operating system (in this case for MacOS). After installing and configuring Android Studio with the default settings and SDK components provided in the installer, open the Android Studio App. In Android Studio, there is a dropdown in the top left corner where you can create a new project, open an existing project, or clone a repository. Select clone repository, and enter the URL for the mediapipe-samples project repository (https://github.com/google-ai-edge/mediapipe-samples/tree/main/examples/llm_inference/android) and select clone. After cloning, the user is able to compile and run the app with no difficulties.
+
+## App Overview
+This project demonstrates an Android application that performs on-device language modeling using MediaPipe's LlmInference and LlmInferenceSession. The app allows a user to enter a query and receive a categorized response generated from an LLM model running directly on the device, showcasing local inferencing without internet connectivity. The application follows a Model-View-ViewModel (MVVM) arhcitecture. The UI is built using Jetpack Compose and includes a screen where users can input queries and view model responses. The ViewModel handles user input, loads the TensorFlow Lite model using MediaPipe Task APIs, and updates the UI state through Compose's state management. The Model layer inlcudes a custom .tflite LLM model asset like gemma.tflite stored locally and used for inference. Overall, this app is an example of a lightweight, privacy preserving on-device AI using LLMs, and it serves as an example for integrating mobile LLM capabilities into Android applications without needing a cloud backend. 
+
+## Key Feature - On-Device LLM Inference
+The first feature of this project to highlight is the ability to perform LLM inference completely on device with no network reliance. What this means is that a small LLM runs directly on the user's Android device to infer intent and produce responses from user input. This feature is implemented across the InferenceModel, ChatViewModel, and MainActivity classes, where the application will run offline without network dependence.
+
+The inference model uses the LlmInference and LlmInferenceSession MediaPipe APIs to manage the LLM, loading it locally and setting the appropriate settings such as any token constraints and model parameters. The model then processes the input text and generates responses asynchronously to enable real-time interaction.
+
+The user prompt is sent to the inference model through the generateResponseAsynch method in ChatViewModel. The ViewModel manages the UI state, including any message and remaining tokens, and provides user feedback when the response is being generated. The sendMessage method then triggers the inference process, updates the UI with any generated results, and completes the response. This ViewModel also estimates remaining available tokens to manage any limits. 
+
+The MainActivity connects the ViewModel and the UI to handle navigating among screens including start, load, and chat screens. UI is built from the app utilizing Jetpack Compose so that the interface remains modern. The inference process operates on-device, making the app lightweight and privacy preserving with no reliance on external APIs.
+
+This feature shows how on-device AI enables user experience with an LLM that can generate relevant responses without the need for an internet connection. 
