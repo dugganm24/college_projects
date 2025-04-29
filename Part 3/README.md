@@ -1,4 +1,4 @@
-# Part 3: Supporting CLoud-Based Inference
+# Part 3: Supporting Cloud-Based Inference
 
 
 ## Group Members
@@ -17,7 +17,7 @@ users to offload image classification tasks to a remote server
 Code is located at: `Part 3/sourceCode/image_classification-starter`
 
 On-Device Image Classification: Performs image classification directly on the Android device using a TensorFlow Lite model
-Updates to existing files for addition of cloud image classiifcation shown below
+Updates to existing files for the addition of cloud image classification are shown below
 
 Code Location:
 
@@ -55,14 +55,23 @@ Code Location for Implemented features:
 - `ImageClassificationHelper.kt`:
   - Calls `cloudInference()`.
   - applies probability threshold and converts to `List<Category>`
-  - sorts and selects top N results and send results and inference time via `_classification` SharedFlow
+  - sorts and selects top N results and sends results and inference time via `_classification` SharedFlow
 
 - `MainActivity.kt`
   - `CameraScreen` Composable: Passes frames to `viewModel.classify()`
   - `BottomSheet` Composable: Displays results from `uiState`
 
  **UI Updates**
-Update to allow user to select between on-device and cloud
-Code changes in `MainACtivity`
+Update to allow the user to select between on-device and cloud
+Code changes in `MainACtivity` `ViewMOdel` and `UIState`
 
-- Key is the additon of radio buttons to select between on-device and server inference in `bottomsheet` for classification
+`MainActivity`:
+  - Key is the addition of radio buttons to select between on-device and server inference in `bottomsheet` for classification
+
+`MainViewModel`:
+  - `setInferenceMode()`: Updates the inference mode (on-device or cloud) and saves to DataStore
+  - `classify()`: Performs image classification (either on-device or cloud) based on the selected inference mode
+
+`UISate`:
+  -  Defines new value `inferenceMode` to default to use on-device classification rather than cloud
+
