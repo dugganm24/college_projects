@@ -20,39 +20,49 @@ var MAX_TOKENS = 1024
  */
 var DECODE_TOKEN_OFFSET = 256
 
+// Custom exception thrown when model fails to load
 class ModelLoadFailException :
     Exception("Failed to load model, please try again")
 
+// Custom exception thrown when a model session fails to initialize
 class ModelSessionCreateFailException :
     Exception("Failed to create model session, please try again")
 
+// Main class responsible for managing LLM lifecycle
+// Loads, manages sessions, generates responses, token estimation
 class InferenceModel private constructor(context: Context) {
+    // MediaPipe LLM inference
     private lateinit var llmInference: LlmInference
     private lateinit var llmInferenceSession: LlmInferenceSession
     private val TAG = InferenceModel::class.qualifiedName
 
+    // UI state tied to selected model 
     val uiState: UiState
 
     init {
+        // Check if model exists 
         if (!modelExists(context)) {
             throw IllegalArgumentException("Model not found at path: ${model.path}")
         }
 
         uiState = model.uiState
-        createEngine(context)
+        createEngine(context) // Load model 
         createSession()
     }
 
+    // Releases resources tied to inference engine 
     fun close() {
         llmInferenceSession.close()
         llmInference.close()
     }
 
+    // Resets inference session 
     fun resetSession() {
         llmInferenceSession.close()
         createSession()
     }
 
+    // Initializes LlmInference engine 
     private fun createEngine(context: Context) {
         val inferenceOptions = LlmInference.LlmInferenceOptions.builder()
             .setModelPath(modelPath(context))
@@ -68,6 +78,7 @@ class InferenceModel private constructor(context: Context) {
         }
     }
 
+    // Creates new LLM Inference session 
     private fun createSession() {
         val sessionOptions =  LlmInferenceSessionOptions.builder()
             .setTemperature(model.temperature)
@@ -84,12 +95,14 @@ class InferenceModel private constructor(context: Context) {
         }
     }
 
+    // Adds user prompt to session and begins response generation
     fun generateResponseAsync(prompt: String, progressListener: ProgressListener<String>) : ListenableFuture<String> {
         val formattedPrompt = model.uiState.formatPrompt(prompt)
         llmInferenceSession.addQueryChunk(formattedPrompt)
         return llmInferenceSession.generateResponseAsync(progressListener)
     }
 
+    // Estimates how many tokens are left in session 
     fun estimateTokensRemaining(prompt: String): Int {
         val context = uiState.messages.joinToString { it.rawMessage } + prompt
         if (context.isEmpty()) return -1 // Specia marker if no content has been added
@@ -102,7 +115,7 @@ class InferenceModel private constructor(context: Context) {
     }
 
     companion object {
-        var model: Model = Model.GEMMA3_CPU
+        var model: Model = Model.GEMMA3_CPU // Defines default model 
         private var instance: InferenceModel? = null
 
         fun getInstance(context: Context): InferenceModel {

@@ -30,11 +30,17 @@ const val START_SCREEN = "start_screen"
 const val LOAD_SCREEN = "load_screen"
 const val CHAT_SCREEN = "chat_screen"
 
+// Hosts apps UI
+// Themes, navigation, app bar
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        
+        // Set Compose UI content 
         setContent {
+            // Apply custom theme 
             LLMInferenceTheme {
+                // Use Scaffold layout with top app bar 
                 Scaffold(
                     topBar = { AppBar() }
                 ) { innerPadding ->
@@ -48,10 +54,12 @@ class MainActivity : ComponentActivity() {
                         val navController = rememberNavController()
                         val startDestination = intent.getStringExtra("NAVIGATE_TO") ?: START_SCREEN
 
+                        // Set up navigation with selection, loading, and chat screens 
                         NavHost(
                             navController = navController,
                             startDestination = startDestination
                         ) {
+                            // Start screen 
                             composable(START_SCREEN) {
                                 SelectionRoute(
                                     onModelSelected = {
@@ -63,6 +71,7 @@ class MainActivity : ComponentActivity() {
                                 )
                             }
 
+                            // Loading screen 
                             composable(LOAD_SCREEN) {
                                 LoadingRoute(
                                     onModelLoaded = {
@@ -80,6 +89,7 @@ class MainActivity : ComponentActivity() {
                                 )
                             }
 
+                            // Chat screen for interacting with the model
                             composable(CHAT_SCREEN) {
                                 ChatRoute(
                                     onClose = {
@@ -110,6 +120,7 @@ class MainActivity : ComponentActivity() {
                     titleContentColor = MaterialTheme.colorScheme.primary,
                 ),
             )
+            // Disclaimer under the top app bar 
             Box(
                 modifier = Modifier.background(MaterialTheme.colorScheme.surfaceContainer)
             ) {
