@@ -16,8 +16,8 @@ users to offload image classification tasks to a remote server
 **Updates Made:**  
 Code is located at: `Part 3/sourceCode/image_classification-starter`
 
-1. On-Device Image Classification
-Performs image classification directly on the Android device using a TensorFlow Lite model
+On-Device Image Classification: Performs image classification directly on the Android device using a TensorFlow Lite model
+Updates to existing files for addition of cloud image classiifcation shown below
 
 Code Location:
 
