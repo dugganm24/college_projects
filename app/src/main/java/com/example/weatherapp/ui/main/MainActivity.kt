@@ -8,31 +8,40 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.weatherapp.R
 import com.example.weatherapp.data.location.LocationProvider
-import java.util.Locale
+import com.example.weatherapp.data.repository.WeatherRepository
 import com.example.weatherapp.ui.history.HistoryActivity
+import com.example.weatherapp.utils.Resource
+import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var locationProvider: LocationProvider
-    private val viewModel: MainViewModel by viewModels()
-
     private lateinit var locationTextView: TextView
-    private lateinit var historyButton: Button // Reference for the History Button
+    private lateinit var weatherTextView: TextView
+    private lateinit var historyButton: Button
+
+    private val viewModel: MainViewModel by viewModels {
+        object : androidx.lifecycle.ViewModelProvider.Factory {
+            override fun <T : androidx.lifecycle.ViewModel> create(modelClass: Class<T>): T {
+                val repo = WeatherRepository(LocationProvider(applicationContext))
+                return MainViewModel(repo) as T
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
         locationTextView = findViewById(R.id.locationTextView)
-        historyButton = findViewById(R.id.historyButton) // Initialize the history button
+        weatherTextView = findViewById(R.id.weatherTextView)
+        historyButton = findViewById(R.id.historyButton)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -43,24 +52,46 @@ class MainActivity : AppCompatActivity() {
         locationProvider = LocationProvider(this)
 
         viewModel.location.observe(this) { location ->
-            // Update the UI with the location information
             if (location != null) {
                 fetchAddressFromCoordinates(location)
+                viewModel.fetchWeather(API_KEY)
             } else {
                 locationTextView.text = "Location not available"
             }
         }
 
-        // Automatically request location on startup if permissions are granted
-        if (locationProvider.hasLocationPermission()) {
-            fetchLocation()  // Get location if permission granted
-        } else {
-            locationProvider.requestLocationPermission(this, LOCATION_PERMISSION_REQUEST_CODE)  // Request permission if not granted
+        viewModel.weather.observe(this) { resource ->
+            when (resource) {
+                is Resource.Loading -> weatherTextView.text = "Loading weather..."
+                is Resource.Success -> {
+                    val data = resource.data
+                    if (data != null) {
+                        val temperatureCelsius = data.main.temp - 273.15
+                        val temperatureText = "%.2f°C".format(temperatureCelsius)
+
+                        weatherTextView.text = """
+                    Weather: ${data.weather[0].description.capitalize()}
+                    Temperature: $temperatureText
+                    Wind Speed: ${data.wind.speed} m/s
+                """.trimIndent()
+                    } else {
+                        weatherTextView.text = "Weather data unavailable"
+                    }
+                }
+                is Resource.Error -> {
+                    weatherTextView.text = "Weather error: ${resource.message}"
+                }
+            }
         }
 
-        // Set up the listener for the History button
+
+        if (locationProvider.hasLocationPermission()) {
+            fetchLocation()
+        } else {
+            locationProvider.requestLocationPermission(this, LOCATION_PERMISSION_REQUEST_CODE)
+        }
+
         historyButton.setOnClickListener {
-            // Navigate to the History Activity when the button is clicked
             val intent = Intent(this, HistoryActivity::class.java)
             startActivity(intent)
         }
@@ -68,9 +99,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun fetchLocation() {
         locationProvider.getCurrentLocation { location: Location? ->
-            // Update the viewModel with the fetched location
             viewModel.updateLocation(location)
-
             if (location == null) {
                 Toast.makeText(this, "Could not get location", Toast.LENGTH_SHORT).show()
             }
@@ -94,7 +123,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // Handle location permission result
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
@@ -110,5 +138,6 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1001
+        private const val API_KEY = "367963667bef68bfdff8412f50c23979"
     }
 }
