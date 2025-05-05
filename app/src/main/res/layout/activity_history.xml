@@ -23,7 +23,6 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scrollbars="vertical"
-        android:contentDescription="@string/weather_history_list"
         app:layout_constraintTop_toBottomOf="@+id/headerText"
         app:layout_constraintBottom_toTopOf="@+id/backButton"
         app:layout_constraintStart_toStartOf="parent"
