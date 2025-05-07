@@ -8,6 +8,7 @@ import com.example.weatherapp.utils.Resource
 import kotlinx.coroutines.launch
 import androidx.lifecycle.viewModelScope
 import android.util.Log
+import com.example.weatherapp.data.local.SavedWeather
 
 class MainViewModel(
     private val weatherRepository: WeatherRepository
@@ -32,4 +33,13 @@ class MainViewModel(
             _weather.value = weatherResponse // Update _weather with the result
         }
     }
+
+    fun saveWeather(weather: SavedWeather) {
+        Log.d("WeatherDB", "ViewModel: saving weather: $weather")
+        viewModelScope.launch {
+            weatherRepository.saveWeather(weather)
+        }
+    }
+
+
 }
