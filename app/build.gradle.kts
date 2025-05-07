@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    kotlin("kapt")
 }
 
 android {
@@ -37,6 +38,7 @@ android {
 
 dependencies {
 
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -48,7 +50,18 @@ dependencies {
     implementation(libs.gson)
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.room.common.jvm)
+    implementation(libs.androidx.room.runtime.android)
+    implementation(libs.androidx.media3.common.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+
+    // Room dependencies
+    implementation(libs.androidx.room.runtime.android) // Uses alias from libs.versions.toml (now pointing to version.ref="room")
+    implementation(libs.androidx.room.ktx)          // For Kotlin Coroutines and Flow support
+    kapt(libs.androidx.room.compiler)             // The Room annotation processor
+
+
 }

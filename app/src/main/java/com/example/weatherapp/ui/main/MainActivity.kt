@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -13,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.weatherapp.R
+import com.example.weatherapp.data.local.SavedWeather
+import com.example.weatherapp.data.local.WeatherDatabase
 import com.example.weatherapp.data.location.LocationProvider
 import com.example.weatherapp.data.repository.WeatherRepository
 import com.example.weatherapp.ui.history.HistoryActivity
@@ -25,11 +28,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var locationTextView: TextView
     private lateinit var weatherTextView: TextView
     private lateinit var historyButton: Button
+    private lateinit var logWeatherButton: Button
+
 
     private val viewModel: MainViewModel by viewModels {
         object : androidx.lifecycle.ViewModelProvider.Factory {
             override fun <T : androidx.lifecycle.ViewModel> create(modelClass: Class<T>): T {
-                val repo = WeatherRepository(LocationProvider(applicationContext))
+                val database = WeatherDatabase.getDatabase(applicationContext)
+                val repo = WeatherRepository(LocationProvider(applicationContext), database.savedWeatherDao())
                 return MainViewModel(repo) as T
             }
         }
@@ -38,6 +44,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        logWeatherButton = findViewById(R.id.logWeatherButton)
+
+        logWeatherButton.setOnClickListener {
+            saveWeatherToDatabase()
+        }
 
         locationTextView = findViewById(R.id.locationTextView)
         weatherTextView = findViewById(R.id.weatherTextView)
@@ -122,6 +134,43 @@ class MainActivity : AppCompatActivity() {
             locationTextView.text = "Failed to get address"
         }
     }
+
+    private fun saveWeatherToDatabase() {
+        Log.d("WeatherDB", "saveWeatherToDatabase() called")
+        val locationData = locationTextView.text.toString()
+        val weatherData = weatherTextView.text.toString()
+        Log.d("WeatherDB", "Location text: $locationData")
+        Log.d("WeatherDB", "Weather text: $weatherData")
+
+        val weatherResource = viewModel.weather.value
+        if (weatherResource is Resource.Success && weatherResource.data != null) {
+            val data = weatherResource.data
+
+            val temperatureCelsius = data.main.temp - 273.15
+            val description = data.weather[0].description.capitalize()
+            val humidity = data.main.humidity
+            val windSpeed = data.wind.speed
+            val date = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", java.util.Locale.getDefault()).format(java.util.Date())
+
+            val weatherEntity = SavedWeather(
+                date = date,
+                locationName = locationData,
+                description = description,
+                temperatureCelsius = temperatureCelsius,
+                humidity = humidity,
+                windSpeed = windSpeed
+            )
+
+            Log.d("WeatherDB", "Prepared weather entity to save: $weatherEntity")
+
+            viewModel.saveWeather(weatherEntity)
+            Toast.makeText(this, "Weather saved successfully", Toast.LENGTH_SHORT).show()
+        } else {
+            Log.d("WeatherDB", "No weather data available to save")
+            Toast.makeText(this, "No weather data to save", Toast.LENGTH_SHORT).show()
+        }
+    }
+
 
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<out String>, grantResults: IntArray
