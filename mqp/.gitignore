@@ -1,0 +1,11 @@
+# usd files
+Audio2Face/USD_Files/*
+
+# settings
+.vscode/*
+
+# speech files
+Audio2Face/SpeechGeneration/Output/*
+
+# env variables
+**/.env
