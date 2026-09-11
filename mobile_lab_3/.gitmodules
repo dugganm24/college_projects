@@ -1,0 +1,3 @@
+[submodule "Part Bonus/source code/mediapipe-samples"]
+	path = Part Bonus/source code/mediapipe-samples
+	url = https://github.com/google-ai-edge/mediapipe-samples
