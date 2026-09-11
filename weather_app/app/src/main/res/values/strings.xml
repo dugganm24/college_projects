@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">weatherApp</string>
+    <string name="location_label">Location: </string>
+    <string name="temperature_label">Temperature: </string>
+    <string name="date_label">Date: </string>
+
+</resources>
